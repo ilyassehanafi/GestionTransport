@@ -9,7 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes} from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MarkerService } from './marker.service';
-
+import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 const appRoutes: Routes = [
   { path: 'home',
    component: MapComponent
@@ -18,7 +18,7 @@ const appRoutes: Routes = [
   component: LoginComponent
  },
   { path: '**',
-   component: LoginComponent
+   component: MapComponent
    }
 ];
 
@@ -33,6 +33,7 @@ const appRoutes: Routes = [
     BrowserModule,
     LeafletModule,
     NgbModule,
+    LeafletDrawModule,
     RouterModule.forRoot(appRoutes,
       { enableTracing: true })
   ],

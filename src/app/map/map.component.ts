@@ -27,47 +27,62 @@ export class MapComponent implements AfterViewInit {
 
   private map:any;
   private initMap(): void {
-
-    const openstreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    var mapboxUrl ='https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}';
+    var mapboxAttribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
+    var mapboxToken ='pk.eyJ1IjoiYXltYW5lLW1zYSIsImEiOiJja3Jha2R1bzEzbTdjMnlzNmYwM2Y3MWYwIn0.umN_r7KlYA_4EdwsKC8uEA'
+    var tileStreet = L.tileLayer(mapboxUrl, {
+      attribution: mapboxAttribution,
       maxZoom: 18,
-      minZoom: 3,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      id: 'mapbox/streets-v11',
+      accessToken: mapboxToken
+      });
+    var tileSattelite = L.tileLayer(mapboxUrl, {
+          attribution: mapboxAttribution,
+          maxZoom: 18,
+          id: 'mapbox/satellite-v9',
+          accessToken: mapboxToken
+          });
+    var tileLight= L.tileLayer(mapboxUrl, {
+    attribution: mapboxAttribution,
+    maxZoom: 18,
+    id: 'mapbox/light-v10',
+    accessToken: mapboxToken
     });
-    const esriMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 18,
-      minZoom: 3,
-      attribution: 'esriMap'
+    var tileDark=L.tileLayer(mapboxUrl, {
+    attribution: mapboxAttribution,
+    maxZoom: 18,
+    id: 'mapbox/dark-v10',
+    accessToken: mapboxToken
     });
-    const earth = L.tileLayer(''
-    , {
-      maxZoom: 18,
-      minZoom: 3,
-      attribution: 'satelliteView'
-    });
-    const googleHybrid = L.tileLayer('http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}',{
-      maxZoom: 18,
-      minZoom: 3,
-      attribution: 'satelliteView'
-    });
-
-    const moroccoMarker = L.marker([31.794525, -7.0849336]).bindPopup('Morocco')
-    const city = L.layerGroup([moroccoMarker]);
-    this.map = L.map('map', {
-      center: [ 31.794525, -7.0849336 ],
-      zoom: 5,
-      layers:[openstreetMap]
-    });
-
-    const baseMaps = {
-      "openstreetmap": openstreetMap,
-      "esri": esriMap,
-      "googleEarthempty":earth,
-      "Hybrid": googleHybrid
-  };
-    const overlayMaps = {
-    "Maroc": city
-};
-  L.control.layers(baseMaps, overlayMaps).addTo(this.map);
+    var map = L.map('map', {
+          center: [35.759465, -5.833954],
+          zoom: 10,
+          layers: [tileStreet, tileSattelite]
+          });
+    var baseMaps = {
+          "Rue": tileStreet,
+          "Satellite": tileSattelite,
+          "Light":tileLight,
+          "Dark":tileDark
+    };
+    L.control.layers(baseMaps).addTo(map);
+    //ajouter toolbar et les differents operations plus creation de group layer
+    var drawnItems =new L.FeatureGroup();
+    map.addLayer(drawnItems);
+    var drawControl = new L.Control.Draw({
+         edit: {
+             featureGroup: drawnItems
+         }
+     });
+     map.addControl(drawControl);
+     map.on('draw:created', function (event: { layer: any; }) {
+      var layer = event.layer,
+      feature = layer.feature = layer.feature || {};
+      feature.type = feature.type || "Feature";
+      var props = feature.properties = feature.properties || {};
+      drawnItems.addLayer(layer); 
+});
+    
   }
   zoomToMap(){
     this.map.flyTo([35.762828905844344, -5.8386885595215645], 17);
