@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2 side-nav">
+            <div class="row col-elements">
+                <h4>Zone d'étude</h4>
+            </div>
+            <hr>
+            <div>
+                <ul class="nav nav-pills nav-fill flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <button type="button" class="btn btn-primary" (click)="zoomToMap()">Réseau routier</button>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <button type="button" class="btn btn-primary" (click)="testFunction()">Efficacité du réseau</button>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <button type="button" class="btn btn-primary" (click)="testFunction()">Fonctionnalité du réseau</button>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">------</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col map-container">
+            <div class="map-frame">
+                <div id="map"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
