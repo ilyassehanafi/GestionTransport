@@ -54,7 +54,7 @@ export class MapComponent implements AfterViewInit {
     id: 'mapbox/dark-v10',
     accessToken: mapboxToken
     });
-    var map = L.map('map', {
+    this.map = L.map('map', {
           center: [35.759465, -5.833954],
           zoom: 10,
           layers: [tileStreet, tileSattelite]
@@ -65,17 +65,17 @@ export class MapComponent implements AfterViewInit {
           "Light":tileLight,
           "Dark":tileDark
     };
-    L.control.layers(baseMaps).addTo(map);
+    L.control.layers(baseMaps).addTo(this.map);
     //ajouter toolbar et les differents operations plus creation de group layer
     var drawnItems =new L.FeatureGroup();
-    map.addLayer(drawnItems);
+    this.map.addLayer(drawnItems);
     var drawControl = new L.Control.Draw({
          edit: {
              featureGroup: drawnItems
          }
      });
-     map.addControl(drawControl);
-     map.on('draw:created', function (event: { layer: any; }) {
+     this.map.addControl(drawControl);
+     this.map.on('draw:created', function (event: { layer: any; }) {
       var layer = event.layer,
       feature = layer.feature = layer.feature || {};
       feature.type = feature.type || "Feature";
@@ -85,7 +85,7 @@ export class MapComponent implements AfterViewInit {
     
   }
   zoomToMap(){
-    this.map.flyTo([35.762828905844344, -5.8386885595215645], 17);
+    this.map.flyTo([35.762828905844344, -5.8386885595215645], 18)
     this.map.on('zoomend', () => {
       L.marker([35.762828905844344, -5.8386885595215645]).bindPopup('Triyal Atlas').addTo(this.map)
   });
