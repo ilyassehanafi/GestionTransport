@@ -1,7 +1,8 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { MarkerService } from '../marker.service';
 import * as L from 'leaflet';
 import { tileLayer } from 'leaflet';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
 const shadowUrl = 'assets/marker-shadow.png';
@@ -23,9 +24,24 @@ L.Marker.prototype.options.icon = iconDefault;
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements AfterViewInit, OnInit {
 
+  @ViewChild("content") content: any;
+  
   private map:any;
+  public zoneDetails:any;
+  constructor(private markerService: MarkerService,private modalService: NgbModal) { }
+   
+
+  ngOnInit(): void {
+    this.zoneDetails = {
+      zoneName: "",
+      nodeNumber: 0,
+      linkNumber: 0,
+      features: []
+    }
+  }
+
   private initMap(): void {
     var mapboxUrl ='https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}';
     var mapboxAttribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
@@ -71,16 +87,48 @@ export class MapComponent implements AfterViewInit {
     this.map.addLayer(drawnItems);
     var drawControl = new L.Control.Draw({
          edit: {
-             featureGroup: drawnItems
+             featureGroup: drawnItems,
          }
      });
-     this.map.addControl(drawControl);
-     this.map.on('draw:created', function (event: { layer: any; }) {
+     var saveControl =  L.Control.extend({        
+      options: {
+        position: 'topleft'
+      },
+      onAdd: (map:any) => {
+        var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+
+        container.style.backgroundColor = 'white';     
+        container.style.backgroundImage = "url(https://upload.wikimedia.org/wikipedia/commons/archive/8/8b/20180523120540%21OOjs_UI_icon_download.svg)";
+        container.style.backgroundSize = "24px 24px";
+        container.style.width = '30px';
+        container.style.height = '30px';
+
+        container.onclick = () => {
+          const modal = this.modalService.open(this.content, { size: 'xl', backdrop: 'static' });
+          modal.result.then((data) => {
+            console.log(data);
+          }, (closed) => {
+            console.log(closed);
+          })
+          
+        }
+
+        return container;
+      }
+    });
+      this.map.addControl(new saveControl());
+      this.map.addControl(drawControl);
+      this.map.on('draw:created',  (event: { layer: any; }) =>{
       var layer = event.layer,
       feature = layer.feature = layer.feature || {};
       feature.type = feature.type || "Feature";
-      var props = feature.properties = feature.properties || {};
+      feature.properties = feature.properties || {};
+      var objectOut = layer.toGeoJSON();
+      var geometry = JSON.stringify(objectOut);
+      this.zoneDetails.features.push(geometry)
       drawnItems.addLayer(layer); 
+      console.log(this.zoneDetails.features)
+      
 });
     
   }
@@ -94,11 +142,8 @@ export class MapComponent implements AfterViewInit {
     alert("Hi")
   }
   
-
-  constructor(private markerService: MarkerService) { }
-
   ngAfterViewInit(): void {
     this.initMap();
-    this.markerService.loadMarkers(this.map);
+    //this.markerService.loadMarkers(this.map);
   }
 }

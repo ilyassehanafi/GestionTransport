@@ -4,12 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes} from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MarkerService } from './marker.service';
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
+import { FormsModule } from '@angular/forms';
 const appRoutes: Routes = [
   { path: 'home',
    component: MapComponent
@@ -34,6 +35,8 @@ const appRoutes: Routes = [
     LeafletModule,
     NgbModule,
     LeafletDrawModule,
+    FormsModule,
+    NgbModalModule,
     RouterModule.forRoot(appRoutes,
       { enableTracing: true })
   ],
