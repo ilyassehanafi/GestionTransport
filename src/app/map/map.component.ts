@@ -3,6 +3,7 @@ import { MarkerService } from '../marker.service';
 import * as L from 'leaflet';
 import { tileLayer } from 'leaflet';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SaveZoneService } from '../save-zone.service';
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
 const shadowUrl = 'assets/marker-shadow.png';
@@ -27,11 +28,11 @@ L.Marker.prototype.options.icon = iconDefault;
 export class MapComponent implements AfterViewInit, OnInit {
 
   @ViewChild("content") content: any;
-  
+
   private map:any;
   public zoneDetails:any;
-  constructor(private markerService: MarkerService,private modalService: NgbModal) { }
-   
+  constructor(private modalService: NgbModal, private saveZoneService: SaveZoneService ) { }
+
 
   ngOnInit(): void {
     this.zoneDetails = {
@@ -90,14 +91,14 @@ export class MapComponent implements AfterViewInit, OnInit {
              featureGroup: drawnItems,
          }
      });
-     var saveControl =  L.Control.extend({        
+     var saveControl =  L.Control.extend({
       options: {
         position: 'topleft'
       },
       onAdd: (map:any) => {
         var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
 
-        container.style.backgroundColor = 'white';     
+        container.style.backgroundColor = 'white';
         container.style.backgroundImage = "url(https://upload.wikimedia.org/wikipedia/commons/archive/8/8b/20180523120540%21OOjs_UI_icon_download.svg)";
         container.style.backgroundSize = "24px 24px";
         container.style.width = '30px';
@@ -106,11 +107,21 @@ export class MapComponent implements AfterViewInit, OnInit {
         container.onclick = () => {
           const modal = this.modalService.open(this.content, { size: 'xl', backdrop: 'static' });
           modal.result.then((data) => {
-            console.log(data);
+            var body = {
+              id: "55",
+              zoneName: data.zoneName,
+              nodeNumber: data.nodeNumber,
+              linkNumber: data.linkNumber,
+              geometry: data.features
+          }
+            console.log(body);
+            this.saveZoneService.saveZone(body).subscribe(data => {
+              console.log("DONE");
+            })
           }, (closed) => {
-            console.log(closed);
+            console.log("ERROR");
           })
-          
+
         }
 
         return container;
@@ -126,11 +137,9 @@ export class MapComponent implements AfterViewInit, OnInit {
       var objectOut = layer.toGeoJSON();
       var geometry = JSON.stringify(objectOut);
       this.zoneDetails.features.push(geometry)
-      drawnItems.addLayer(layer); 
-      console.log(this.zoneDetails.features)
-      
-});
-    
+      drawnItems.addLayer(layer);
+    });
+
   }
   zoomToMap(){
     this.map.flyTo([35.762828905844344, -5.8386885595215645], 18)
@@ -141,7 +150,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   testFunction(){
     alert("Hi")
   }
-  
+
   ngAfterViewInit(): void {
     this.initMap();
     //this.markerService.loadMarkers(this.map);
