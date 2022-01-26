@@ -1,29 +1,48 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
 
-<div class="sidenav">
-    <div class="login-main-text">
-        <h2>Application<br> Login Page</h2>
-        <p>Login or register from here to access.</p>
-    </div>
-</div>
-<div class="main">
-    <div class="col-md-6 col-sm-12">
-        <div class="login-form">
-            <form>
-                <div class="form-group">
-                    <label>User Name</label>
-                    <input type="text" class="form-control" placeholder="User Name">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-black">Login</button>
-                <button type="submit" class="btn btn-secondary">Register</button>
-            </form>
-        </div>
-    </div>
-</div>
+<body>
+  <div class="login-flex">
+    <div class="slider">
+      <div class="titre_app"> <h1 style="text-align: center;">Application Web Pour La Gestion </h1>
+        <br> <h1 style="text-align: center;">De Réseaux Transport</h1></div>
+      <div class="slides">
+        <div class="slide"><img src="assets/image/login4.png"></div>
+        <div class="slide"><img src="assets/image/login1.png"></div>
+        <div class="slide"><img src="assets/image/login2.png"></div>
+        <div class="slide"><img src="assets/image/login3.png"></div>
+      </div>
+    </div> 
+    <div class="login-box">
+        <h2>Login</h2>
+        <form>
+          <div class="user-box">
+            <input type="text" name="UserName" required>
+            <label>Username</label>
+          </div>
+          <div class="user-box">
+            <input type="password" name="🔑" required>
+            <label>Password</label>
+          </div>
+          <a href="#" type="submit">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Connexion
+          </a>
+        </form>
+        <br>
+        <br>
+        <h6 style="color: white;">Vous êtes nouveau ? <a href="#">S'inscrire ici</a></h6>
+      </div>
+  </div>
+    
+</body>
+</html>
