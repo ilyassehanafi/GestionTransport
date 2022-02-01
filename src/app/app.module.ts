@@ -7,20 +7,20 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes} from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
-import { MarkerService } from './marker.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 import { FormsModule } from '@angular/forms';
+import { InterceptInterceptor } from './intercept.interceptor';
 const appRoutes: Routes = [
-  { path: 'home',
-   component: MapComponent
-   },
-  { path: 'login',
+{ path: 'login',
   component: LoginComponent
- },
-  { path: '**',
+},
+{ path: 'home',
+ component: MapComponent
+},
+{ path: '**',
    component: MapComponent
-   }
+}
 ];
 
 @NgModule({
@@ -40,7 +40,12 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes,
       { enableTracing: true })
   ],
-  providers: [MarkerService],
+  providers: [
+    {   provide: HTTP_INTERCEPTORS,
+        useClass: InterceptInterceptor,
+        multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

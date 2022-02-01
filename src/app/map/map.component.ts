@@ -1,9 +1,10 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { MarkerService } from '../marker.service';
 import * as L from 'leaflet';
 import { tileLayer } from 'leaflet';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SaveZoneService } from '../save-zone.service';
+import { ZoneService } from '../zone.service';
+import { Router } from '@angular/router';
+import { AuthentificationService } from '../authentification.service';
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
 const shadowUrl = 'assets/marker-shadow.png';
@@ -29,12 +30,15 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   @ViewChild("content") content: any;
 
-  private map:any;
-  public zoneDetails:any;
-  constructor(private modalService: NgbModal, private saveZoneService: SaveZoneService ) { }
-
+    private map:any;
+    public zoneDetails:any;
+    constructor(private modalService: NgbModal, private saveZoneService: ZoneService,
+    private authentificationService: AuthentificationService, private route:Router  ) { }
 
   ngOnInit(): void {
+    if(this.authentificationService.isUserLoggedIn() == false){
+      this.route.navigate(['/login'])
+    }
     this.zoneDetails = {
       zoneName: "",
       nodeNumber: 0,
@@ -151,8 +155,11 @@ export class MapComponent implements AfterViewInit, OnInit {
     alert("Hi")
   }
 
+  logOut(){
+    this.authentificationService.logOut();
+    this.route.navigate(['/login']);
+  }
   ngAfterViewInit(): void {
     this.initMap();
-    //this.markerService.loadMarkers(this.map);
   }
 }

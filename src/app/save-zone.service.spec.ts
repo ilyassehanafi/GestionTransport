@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SaveZoneService } from './save-zone.service';
+import { ZoneService } from './zone.service';
 
 describe('SaveZoneService', () => {
-  let service: SaveZoneService;
+  let service: ZoneService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SaveZoneService);
+    service = TestBed.inject(ZoneService);
   });
 
   it('should be created', () => {

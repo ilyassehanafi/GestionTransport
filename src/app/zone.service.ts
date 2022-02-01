@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SaveZoneService {
+export class ZoneService {
 
   constructor(private http: HttpClient) { }
 
   saveZone(jsonZone: any): Observable<any> {
-    const headers = { 'Content-Type': 'application/json'};
-    return this.http.post('http://localhost:8093/test', jsonZone,{responseType: 'text'});
+    const headers = { 'Content-Type': 'application/json', 'responseType': 'text'};
+    return this.http.post('http://localhost:8093/saveZone', jsonZone,{headers});
     }
 }
 
