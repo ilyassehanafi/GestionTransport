@@ -5,21 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ZoneService } from '../zone.service';
 import { Router } from '@angular/router';
 import { AuthentificationService } from '../authentification.service';
-const iconRetinaUrl = 'assets/marker-icon-2x.png';
-const iconUrl = 'assets/marker-icon.png';
-const shadowUrl = 'assets/marker-shadow.png';
-const iconDefault = L.icon({
-  iconRetinaUrl,
-  iconUrl,
-  shadowUrl,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  tooltipAnchor: [16, -28],
-  shadowSize: [41, 41]
-});
-L.Marker.prototype.options.icon = iconDefault;
-
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-map',
@@ -32,13 +18,29 @@ export class MapComponent implements AfterViewInit, OnInit {
 
     private map:any;
     public zoneDetails:any;
+    private json: any;
     constructor(private modalService: NgbModal, private saveZoneService: ZoneService,
-    private authentificationService: AuthentificationService, private route:Router  ) { }
+    private authentificationService: AuthentificationService, private route:Router, private http: HttpClient) { }
 
   ngOnInit(): void {
-    if(this.authentificationService.isUserLoggedIn() == false){
+    if(this.authentificationService.isUserLoggedIn() == false)
+    {
       this.route.navigate(['/login'])
     }
+    const iconRetinaUrl = 'assets/marker-icon-2x.png';
+    const iconUrl = 'assets/marker-icon.png';
+    const shadowUrl = 'assets/marker-shadow.png';
+    const iconDefault = L.icon({
+    iconRetinaUrl,
+    iconUrl,
+    shadowUrl,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28],
+    shadowSize: [41, 41]
+    });
+    L.Marker.prototype.options.icon = iconDefault;
     this.zoneDetails = {
       zoneName: "",
       nodeNumber: 0,
@@ -112,18 +114,17 @@ export class MapComponent implements AfterViewInit, OnInit {
           const modal = this.modalService.open(this.content, { size: 'xl', backdrop: 'static' });
           modal.result.then((data) => {
             var body = {
-              id: "55",
+              id: "",
               zoneName: data.zoneName,
               nodeNumber: data.nodeNumber,
               linkNumber: data.linkNumber,
               geometry: data.features
           }
-            console.log(body);
             this.saveZoneService.saveZone(body).subscribe(data => {
-              console.log("DONE");
+              this.zoneDetails.features.length = 0
             })
           }, (closed) => {
-            console.log("ERROR");
+            console.log("ERROR" + closed);
           })
 
         }
@@ -139,17 +140,22 @@ export class MapComponent implements AfterViewInit, OnInit {
       feature.type = feature.type || "Feature";
       feature.properties = feature.properties || {};
       var objectOut = layer.toGeoJSON();
-      var geometry = JSON.stringify(objectOut);
-      this.zoneDetails.features.push(geometry)
+      console.log(objectOut.geometry.coordinates)
+      this.zoneDetails.features.push(objectOut.geometry.coordinates)
       drawnItems.addLayer(layer);
     });
 
   }
   zoomToMap(){
-    this.map.flyTo([35.762828905844344, -5.8386885595215645], 18)
+    this.map.flyTo([35.7641171318026, -5.833117961883545], 16)
     this.map.on('zoomend', () => {
-      L.marker([35.762828905844344, -5.8386885595215645]).bindPopup('Triyal Atlas').addTo(this.map)
-  });
+      this.http.get("./assets/data/data.json",  {responseType: 'json'}).subscribe(data => {
+      this.json = data;
+      L.geoJSON(this.json).addTo(this.map);
+    },error => {
+     console.error(error);
+    });
+    });
   }
   testFunction(){
     alert("Hi")
