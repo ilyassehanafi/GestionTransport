@@ -11,6 +11,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 import { FormsModule } from '@angular/forms';
 import { InterceptInterceptor } from './intercept.interceptor';
+import { ChartsComponent } from './charts/charts.component';
+import { NgxEchartsModule } from 'ngx-echarts';
+
 const appRoutes: Routes = [
 { path: 'login',
   component: LoginComponent
@@ -19,7 +22,11 @@ const appRoutes: Routes = [
  component: MapComponent
 },
 { path: '**',
-   component: MapComponent
+   component: ChartsComponent
+},
+{
+path:'chart',
+component: ChartsComponent
 }
 ];
 
@@ -27,7 +34,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     MapComponent,
-    LoginComponent
+    LoginComponent,
+    ChartsComponent
   ],
   imports: [
     HttpClientModule,
@@ -38,7 +46,10 @@ const appRoutes: Routes = [
     FormsModule,
     NgbModalModule,
     RouterModule.forRoot(appRoutes,
-      { enableTracing: true })
+      { enableTracing: true }),
+    NgxEchartsModule.forRoot({
+        echarts: () => import('echarts'),
+      })
   ],
   providers: [
     {   provide: HTTP_INTERCEPTORS,

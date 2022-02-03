@@ -15,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
 export class MapComponent implements AfterViewInit, OnInit {
 
   @ViewChild("content") content: any;
+  @ViewChild("nodegraph") nodegraph: any;
 
     private map:any;
     public zoneDetails:any;
@@ -158,7 +159,9 @@ export class MapComponent implements AfterViewInit, OnInit {
     });
   }
   testFunction(){
-    alert("Hi")
+    console.log("her")
+    //this.route.navigate(['/chart']);
+    const modal = this.modalService.open(this.nodegraph, { size: 'xl' });
   }
 
   logOut(){
