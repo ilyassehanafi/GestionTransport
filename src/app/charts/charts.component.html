@@ -1,1 +1,9 @@
 <div echarts [options]="chartOption" class="demo-chart"></div>
+
+<ng-template style="width: 1200px;" #graphCalcul let-modal>
+    <div class="modal-footer">
+        <div class="container">
+        </div>
+        <button type="button primary" class="btn btn-outline-dark" (click)="modal.close()">OK</button>
+    </div>
+</ng-template>
