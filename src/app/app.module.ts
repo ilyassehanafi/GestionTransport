@@ -22,16 +22,12 @@ const appRoutes: Routes = [
  component: MapComponent
 },
 { path: '**',
-   component: ChartsComponent
+   component: LoginComponent
 },
 {
 path:'chart',
 component: ChartsComponent
-},
-{
-  path:'**',
-  component: LoginComponent
-  }
+}
 ];
 
 @NgModule({

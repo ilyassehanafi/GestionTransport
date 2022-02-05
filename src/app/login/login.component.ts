@@ -14,6 +14,10 @@ export class LoginComponent implements OnInit {
   constructor(private authentificationService: AuthentificationService, private route:Router) { }
 
   ngOnInit(): void {
+    if(this.authentificationService.isUserLoggedIn() == true)
+    {
+      this.route.navigate(['/home'])
+    }
   }
 
   userLogin(){
@@ -23,7 +27,7 @@ export class LoginComponent implements OnInit {
         this.route.navigate(['/home']);
 
     }, error =>{
-      console.log(error)
+      console.error(error);
       alert("sorry please enter correct mail and password");
     })
   }

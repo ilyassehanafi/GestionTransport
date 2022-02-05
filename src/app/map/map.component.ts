@@ -167,9 +167,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     this.authentificationService.logOut();
     this.route.navigate(['/login']);
   }
-
   ngAfterViewInit(): void {
     this.initMap();
   }
-
 }
