@@ -18,7 +18,6 @@ export class AuthentificationService {
 
   isUserLoggedIn() {
     let user = localStorage.getItem('username')
-    console.log(!(user === null))
     return !(user === null)
   }
 

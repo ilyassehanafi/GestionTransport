@@ -27,7 +27,11 @@ const appRoutes: Routes = [
 {
 path:'chart',
 component: ChartsComponent
-}
+},
+{
+  path:'**',
+  component: LoginComponent
+  }
 ];
 
 @NgModule({
@@ -45,8 +49,7 @@ component: ChartsComponent
     LeafletDrawModule,
     FormsModule,
     NgbModalModule,
-    RouterModule.forRoot(appRoutes,
-      { enableTracing: true }),
+    RouterModule.forRoot(appRoutes),
     NgxEchartsModule.forRoot({
         echarts: () => import('echarts'),
       })

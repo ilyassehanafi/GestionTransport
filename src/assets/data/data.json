@@ -451,7 +451,9 @@
         },
         {
             "type": "Feature",
-            "properties": {},
+            "properties": {
+                "h":0
+            },
             "geometry": {
                 "type": "Point",
                 "coordinates": [-5.834394693374634,
@@ -461,7 +463,9 @@
         },
         {
             "type": "Feature",
-            "properties": {},
+            "properties": {
+                "h":0
+            },
             "geometry": {
                 "type": "Point",
                 "coordinates": [-5.835295915603638,

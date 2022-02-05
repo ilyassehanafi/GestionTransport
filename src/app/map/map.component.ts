@@ -141,7 +141,7 @@ export class MapComponent implements AfterViewInit, OnInit {
       feature.type = feature.type || "Feature";
       feature.properties = feature.properties || {};
       var objectOut = layer.toGeoJSON();
-      console.log(objectOut.geometry.coordinates)
+
       this.zoneDetails.features.push(objectOut.geometry.coordinates)
       drawnItems.addLayer(layer);
     });
@@ -152,14 +152,13 @@ export class MapComponent implements AfterViewInit, OnInit {
     this.map.on('zoomend', () => {
       this.http.get("./assets/data/data.json",  {responseType: 'json'}).subscribe(data => {
       this.json = data;
-      L.geoJSON(this.json).addTo(this.map);
+      L.geoJSON(this.json, /**{onEachFeature: this.onEachFeature}**/).addTo(this.map);
     },error => {
      console.error(error);
     });
     });
   }
   testFunction(){
-    console.log("her")
     //this.route.navigate(['/chart']);
     const modal = this.modalService.open(this.nodegraph, { size: 'xl' });
   }
@@ -168,7 +167,9 @@ export class MapComponent implements AfterViewInit, OnInit {
     this.authentificationService.logOut();
     this.route.navigate(['/login']);
   }
+
   ngAfterViewInit(): void {
     this.initMap();
   }
+
 }
