@@ -1,0 +1,41 @@
+.box {
+    border-radius: 4px;
+    background: lightblue !important;
+    padding-bottom: 100%;
+}
+
+.col-lg-6,
+.col-md-6,
+.col-xs-6 {
+    margin-top: 30px !important;
+    background: #fff;
+}
+
+body {
+    background: #a5b5c5;
+}
+
+table.tableizer-table {
+    font-size: 12px;
+    border: 1px solid #CCC;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+}
+
+.tableizer-table td {
+    /* padding: 4px;
+    margin: 3px;
+    border: 1px solid #CCC; */
+    border: 1px solid #999;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.tableizer-table th {
+    /* background-color: #104E8B;
+    color: #FFF;
+    font-weight: bold; */
+    border: 1px solid #999;
+    padding: 0.5rem;
+    text-align: left;
+}

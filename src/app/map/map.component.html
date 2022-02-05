@@ -1,5 +1,4 @@
 <div class='wrapper'>
-
     <input data-function='swipe' id='swipe' type='checkbox'>
     <label data-function='swipe' for='swipe' style="margin-left: 30px;"><img src="assets/image/th-list-solid.svg"></label>
 
@@ -55,14 +54,12 @@
             </div>
         </ng-template>
     </div>
-
     <div class='sidebar'>
         <nav class='menu'>
             <li class="active"><a href="#" style="cursor: pointer;">Home</a></li>
             <li><a (click)="zoomToMap()" style="cursor: pointer;">Zoom sur Tanger</a></li>
-            <li><a (click)="testFunction()" style="cursor: pointer;">Affichage des données</a></li>
+            <li><a (click)="showData()" style="cursor: pointer;">Affichage des graphes</a></li>
             <ng-template #nodegraph let-modal>
-
                 <div class="modal-header">
                     <h4 class="modal-title" id="modal-basic-title">Modélisation du réseau</h4>
                     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -78,8 +75,45 @@
                     <button type="button primary" class="btn btn-outline-dark" (click)="modal.close()">OK</button>
                 </div>
             </ng-template>
-            <li><a (click)="testFunction()" style="cursor: pointer;">Affichage des graphes</a></li>
-            <li><a (click)="testFunction()" style="cursor: pointer;">Décision</a></li>
+
+            <li><a (click)="showDiagram()" style="cursor: pointer;">Affichage des diagrammes</a></li>
+            <ng-template #diagramgraph let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title"> Indices : </h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <app-diagrams></app-diagrams>
+                </div>
+                <div class="modal-footer">
+                    <div class="container">
+                    </div>
+                    <button type="button primary" class="btn btn-outline-dark" (click)="modal.close()">OK</button>
+                </div>
+            </ng-template>
+
+            <li><a (click)="decide()" style="cursor: pointer;">Décision</a></li>
+
+            <ng-template #decisionZone let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title"> Analyse des indices et des flux : </h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    Analyse: -On a pour les deux indices simple et pondéré la valeur est 100% alors notre réseaux est connexe. -Le graph est connexe, il a une structure en circuit. La fréquence des liens est élevée : avec une connectivité est très importante (β>1) et 54.54%
+                    des liens sont possibles (γ=54.54%) avec 6 circuits possibles ( μ=6) représentant 28% maximum de circuit possible ( α = 28.57%).
+
+                </div>
+                <div class="modal-footer">
+                    <div class="container">
+                    </div>
+                    <button type="button primary" class="btn btn-outline-dark" (click)="modal.close()">OK</button>
+                </div>
+            </ng-template>
             <li><a (click)="logOut()" style="cursor: pointer;">Se déconnecter</a></li>
         </nav>
     </div>

@@ -33,4 +33,13 @@ export class AuthentificationService {
                       'responseType': 'text'};
     return this.httpClient.post<Token>('http://127.0.0.1:8093/authenticate', userRequest,{headers});
   }
+
+  signUp(username:string, password:string){
+    const userRequest = {
+      "userName":username,
+      "password":password
+    }
+    const headers = { 'Content-Type': 'application/json','responseType': 'text'};
+    return this.httpClient.post('http://127.0.0.1:8093/subscribe', userRequest,{headers});
+  }
 }

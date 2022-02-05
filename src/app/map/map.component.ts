@@ -16,6 +16,8 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   @ViewChild("content") content: any;
   @ViewChild("nodegraph") nodegraph: any;
+  @ViewChild("diagramgraph") diagramgraph: any;
+  @ViewChild("decisionZone") decision: any;
 
     private map:any;
     public zoneDetails:any;
@@ -158,14 +160,20 @@ export class MapComponent implements AfterViewInit, OnInit {
     });
     });
   }
-  testFunction(){
-    //this.route.navigate(['/chart']);
-    const modal = this.modalService.open(this.nodegraph, { size: 'xl' });
+  showData(){
+    let modal = this.modalService.open(this.nodegraph, { size: 'xl' });
+  }
+  showDiagram(){
+    let modal = this.modalService.open(this.diagramgraph, { size: 'xl' });
   }
 
   logOut(){
     this.authentificationService.logOut();
     this.route.navigate(['/login']);
+  }
+
+  decide(){
+    let modal = this.modalService.open(this.decision, { size: 'xl' });
   }
   ngAfterViewInit(): void {
     this.initMap();

@@ -19,7 +19,9 @@ export class LoginComponent implements OnInit {
       this.route.navigate(['/home'])
     }
   }
-
+  signUp(){
+    this.route.navigate(['/signup'])
+  }
   userLogin(){
     this.authentificationService.login(this.user).subscribe((data) =>{
       this.user.token = data.response

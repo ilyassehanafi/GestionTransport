@@ -14,8 +14,8 @@
             </div>
         </div>
         <div class="login-box">
-            <h2>Login</h2>
-            <form (ngSubmit)="userLogin()">
+            <h2>Insription</h2>
+            <form (ngSubmit)="usersignUp()">
                 <div class="user-box">
                     <input id="userName" type="text" name="UserName" [(ngModel)]='user.userName' required>
                     <label>Username</label>
@@ -29,12 +29,11 @@
                     <span></span>
                     <span></span>
                     <span></span>
-                    <button class="signIn"> Connexion</button>
+                    <button class="signIn"> S'Inscrire</button>
                 </a>
             </form>
             <br>
             <br>
-            <h6 style="color: white;">Vous êtes nouveau ? <a (click)="signUp()">S'inscrire ici</a></h6>
         </div>
     </div>
 

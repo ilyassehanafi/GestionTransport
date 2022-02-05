@@ -1,8 +1,9 @@
 .wrapper {
     display: flex;
     min-height: 100%;
-  }
-  .sidebar {
+}
+
+.sidebar {
     transform: translate3d(-260px, 0px, 0px);
     position: absolute;
     width: 260px;
@@ -11,41 +12,46 @@
     left: 0;
     height: 100%;
     transition: all .3s;
-  }
-   
-  .menu li {
+}
+
+.menu li {
     padding: 10px;
     list-style: none;
     width: 0%;
     background: #17609f;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  .menu li.active {
+}
+
+.menu li.active {
     background: #112e66;
-  }
-  .menu li a {
+}
+
+.menu li a {
     color: #fff;
     display: block;
     text-decoration: none;
     padding: 5px 0px 5px 0;
     margin: 0 20px;
-  }
-  .menu li:hover{
-      background: #0f4a7e;
-  }
-  .content {
+}
+
+.menu li:hover {
+    background: #0f4a7e;
+}
+
+.content {
     flex: 1;
     padding: 52px 30px;
     background: #0f4a7e;
     transform: translate3d(0, 0, 0);
     transition: transform .3s;
-  }
-  input[data-function*='swipe'] {
+}
+
+input[data-function*='swipe'] {
     position: absolute;
     opacity: 0;
-  }
-   
-  label[data-function*='swipe'] {
+}
+
+label[data-function*='swipe'] {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -59,43 +65,45 @@
     cursor: pointer;
     transform: translate3d(0, 0, 0);
     transition: transform .3s;
-  }
-   
-  input[data-function*='swipe']:checked ~ label[data-function*='swipe'] {
+}
+
+input[data-function*='swipe']:checked~label[data-function*='swipe'] {
     transform: translate3d(260px, 0, 0);
-  }
-  input[data-function*='swipe']:checked ~ .content {
+}
+
+input[data-function*='swipe']:checked~.content {
     transform: translate3d(245px, 0px, 0px);
-  }
-   
-  input[data-function*='swipe']:checked ~ .sidebar {
+}
+
+input[data-function*='swipe']:checked~.sidebar {
     transform: translate3d(0px, 0px, 0px);
-  }
-  input[data-function*='swipe']:checked ~ .sidebar .menu li {
+}
+
+input[data-function*='swipe']:checked~.sidebar .menu li {
     width: 100%;
-  }
-/*--------------------------------------------------------------*/  
+}
+
+
+/*--------------------------------------------------------------*/
 
 .map-container {
     /*margin-top: 4vh;*/
-    margin-left:0;
+    margin-left: 0;
     margin-top: 0;
     height: 85vh;
 }
 
 .map-frame {
     margin-top: 0;
-    margin-left:0;
+    margin-left: 0;
     border: 2px solid black;
     height: 100%;
     width: 100%
 }
 
 #map {
-    margin-left:0;
+    margin-left: 0;
     margin-top: 0;
     height: 100%;
     width: 100%;
 }
-
-

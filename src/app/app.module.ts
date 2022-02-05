@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { InterceptInterceptor } from './intercept.interceptor';
 import { ChartsComponent } from './charts/charts.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { SignupComponent } from './signup/signup.component';
+import { DiagramsComponent } from './diagrams/diagrams.component';
 
 const appRoutes: Routes = [
 { path: 'login',
@@ -21,13 +23,21 @@ const appRoutes: Routes = [
 { path: 'home',
  component: MapComponent
 },
-{ path: '**',
-   component: LoginComponent
-},
 {
-path:'chart',
-component: ChartsComponent
-}
+  path:'chart',
+  component: ChartsComponent
+  },
+  {
+    path:'signup',
+    component: SignupComponent
+  },
+  {
+    path:'diagram',
+    component: DiagramsComponent
+  },
+  { path: '**',
+    component: LoginComponent
+  }
 ];
 
 @NgModule({
@@ -35,7 +45,9 @@ component: ChartsComponent
     AppComponent,
     MapComponent,
     LoginComponent,
-    ChartsComponent
+    ChartsComponent,
+    SignupComponent,
+    DiagramsComponent
   ],
   imports: [
     HttpClientModule,
